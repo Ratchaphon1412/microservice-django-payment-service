@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "djangopayment"
+version = "0.1.0"
+description = ""
+authors = ["ratchaphon1412 <ratchaphon.h111@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+djangorestframework = "^3.14.0"
+markdown = "^3.4.4"
+django-filter = "^23.2"
+python-dotenv = "^1.0.0"
+psycopg2-binary = "^2.9.7"
+psycopg2 = "^2.9.7"
+django = "^4.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
