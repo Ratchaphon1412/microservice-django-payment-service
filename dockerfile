@@ -15,6 +15,6 @@ RUN poetry config virtualenvs.create false \
 
 
 
-EXPOSE 8000
+EXPOSE 8023
 
 
