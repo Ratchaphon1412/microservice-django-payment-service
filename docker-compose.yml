@@ -5,9 +5,9 @@ services:
     volumes:
       - ./:/app
     working_dir: /app
-    command: poetry run python3 manage.py runserver 0.0.0.0:8000
+    command: poetry run python3 manage.py runserver 0.0.0.0:8023
     ports:
-      - "8000:8000"
+      - "8023:8023"
     networks:
       - payment-network
     depends_on:
