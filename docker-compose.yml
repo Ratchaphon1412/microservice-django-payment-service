@@ -10,6 +10,7 @@ services:
       - "8023:8023"
     networks:
       - payment-network
+      - default
     depends_on:
       db:
         condition: service_started
@@ -28,3 +29,6 @@ services:
 networks:
   payment-network:
     driver: bridge
+  default:
+    external:
+      name: kafka-network
