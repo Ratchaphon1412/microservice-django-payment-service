@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'quotation',
-    'service',
+    'payment',
 ]
 
 # Rest Framework settings
@@ -125,6 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
