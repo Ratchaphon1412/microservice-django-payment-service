@@ -16,6 +16,7 @@ psycopg2 = "^2.9.7"
 django = "^4.2.4"
 xhtml2pdf = "^0.2.11"
 pillow = "^10.0.0"
+kafka-python = "^2.0.2"
 
 
 [build-system]
