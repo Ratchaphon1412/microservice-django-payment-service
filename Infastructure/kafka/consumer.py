@@ -1,6 +1,7 @@
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 from django.conf import settings
+from ..event.listener.topic import Listener
 import json
 import sys 
 import threading
@@ -23,10 +24,12 @@ class Consumer(threading.Thread):
             for message in self.consumer:
             # message value and key are raw bytes -- decode if necessary!
             # e.g., for unicode: `message.value.decode('utf-8')`
-                print ("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
-                                                    message.offset, message.key,
-                                                    message.value))
-                return message.value
+                # print ("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
+                #                                     message.offset, message.key,
+                #                                     message.value))
+                
+                Listener.run(message.topic,message.value)
+               
                 
         except KafkaError as e:
             print(e)

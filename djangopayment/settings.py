@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'quotation',
     'payment',
+    
 ]
 
 # Rest Framework settings
