@@ -140,6 +140,7 @@ USE_I18N = os.getenv('USE_I18N')
 
 USE_TZ = os.getenv('USE_TZ')
 
+OMISE_SECRETE= os.getenv('OMISE_SECRETE')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
