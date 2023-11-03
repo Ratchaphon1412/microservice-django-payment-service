@@ -1,14 +1,31 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from Infastructure.service import Facade
+from Infrastructure.service import Facade
+from rest_framework import status
 # Create your views here.
 
 
-class PaymentApi(APIView):
-    def get(self,request):
-        return Response({'Balance':Facade.omiseService().adminBalance()})
-    
-class CreditCardApi(APIView):
+class CustomerPayment(APIView):
     def get(self,request):
         pass
+    def post(self,request):
+        # Create User
+        request_data = request.data
+        
+        
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message":"Success",
+                "data":request_data
+            }
+        )
+        
+        
+    def put(self,request):
+        pass
+    def delete(self,request):
+        pass
+    
+
