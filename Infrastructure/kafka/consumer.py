@@ -1,7 +1,7 @@
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 from django.conf import settings
-from ..event.listener.topic import Listener
+from Infrastructure.event.listener.topic import Listener
 import json
 import sys 
 import threading

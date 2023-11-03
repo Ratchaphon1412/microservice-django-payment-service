@@ -1,5 +1,6 @@
 from .factory.renderpdf import RenderPDF
 from .factory.paymentFactory.omisePayment import OmisePayment
+from .factory.api import APICall
 
 class Facade:
 
@@ -20,5 +21,7 @@ class Facade:
     def omiseService():
         return omisePayment
 
+    def apiService():
+        return APICall
 
     

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from Infastructure.kafka.consumer import Consumer
+from Infrastructure.kafka.consumer import Consumer
 
 class Command(BaseCommand):
     help = 'Starts the consumer'

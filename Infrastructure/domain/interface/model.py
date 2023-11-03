@@ -2,28 +2,28 @@ import abc
 
 class ModelInterface(abc.ABC) :
     @abc.abstractmethod
-    def create(self, data) :
+    def create( **data) :
         pass
     
     @abc.abstractmethod
-    def update(self, data) :
+    def update( data) :
         pass
     
     @abc.abstractmethod
-    def delete(self, data) :
+    def delete( data) :
         pass
     @abc.abstractmethod
-    def get(self, data) :
-        pass
-    
-    @abc.abstractmethod
-    def filter(self, data) :
+    def get( data) :
         pass
     
     @abc.abstractmethod
-    def all(self) :
+    def filter( data) :
         pass
     
     @abc.abstractmethod
-    def get_or_create(self, data) :
+    def all() :
+        pass
+    
+    @abc.abstractmethod
+    def get_or_create( data) :
         pass
