@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path('payment/', views.PaymentApi.as_view()),
+   
     
     
 ]
