@@ -12,12 +12,27 @@ class OmisePayment:
         
         balance = omise.Balance.retrieve()
         return balance.total
+    
+    def adminReceipt(self):
+        receipts = omise.Receipt.retrieve()
+        return receipts.data
+    
+    def adminReceiptDetail(self,receipt_id):
+        receipt = omise.Receipt.retrieve(receipt_id)
+        return receipt
+    
     def createCustomer(self,email,description):
         customer = omise.Customer.create(
             email=email,
             description=description
         )
         return customer.id
+    
+    def deleteCustomer(self,customer_id):
+        
+        customer = omise.Customer.retrieve(customer_id)
+        return customer.destroy()
+    
     def getCustomer(self,customer_id):
         customer = omise.Customer.retrieve(customer_id)
         return customer
@@ -34,7 +49,39 @@ class OmisePayment:
         )
         return token.id
     
-    def updateCustomerAddcard(self,customer_id,card_id):
+    def addCardCustomer(self,customer_id,card_id):
         customer = omise.Customer.retrieve(customer_id)
         customer.update(card=card_id)
-        return customer.id
+        return customer
+    
+    def deleteCustomerCard(self,customer_id,card_id):
+        customer = omise.Customer.retrieve(customer_id)
+        card = customer.cards.retrieve(card_id)
+        
+        return card.destroy()
+    
+    def listCustomerCard(self,customer_id):
+        customer = omise.Customer.retrieve(customer_id)
+        return customer.cards.data
+    
+    def paymentCardRegister(self,customer_id,card_id,amount,return_uri):
+        charge = omise.Charge.create(
+            amount=amount,
+            currency="thb",
+            customer=customer_id,
+            card=card_id,
+            return_uri=return_uri,
+        )
+        return charge
+    
+    def paymentCardOnetime(self,amount,token,return_uri):
+        charge = omise.Charge.create(
+            amount=amount,
+            currency="thb",
+            card=token,
+            return_uri=return_uri,
+        )
+        
+        return charge
+    
+    
