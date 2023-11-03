@@ -1,0 +1,44 @@
+version: "3"
+services:
+  app-auth-server:
+    build:
+      context: .
+      dockerfile: dockerfile.prod
+    working_dir: /app
+    command: poetry run gunicorn --bind 0.0.0.0:8023 djangopayment.wsgi
+    ports:
+      - "8023:8023"
+    networks:
+      - payment-network
+    depends_on:
+      db:
+        condition: service_started
+  db:
+    image: postgres:13.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=payment
+      - PGPORT=5433
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5433"
+    networks:
+      - payment-network
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./Nginx:/etc/nginx/conf.d
+    depends_on:
+      - app-server
+    networks:
+      - payment-network
+networks:
+  payment-network:
+    driver: bridge
+  default:
+    external:
+      name: kafka-network
