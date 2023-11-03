@@ -39,6 +39,3 @@ services:
 networks:
   payment-network:
     driver: bridge
-  default:
-    external:
-      name: kafka-network
