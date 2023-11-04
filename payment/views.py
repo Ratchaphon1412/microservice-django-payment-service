@@ -171,6 +171,19 @@ class PaymentAnonymous(APIView):
         return Response({"message": "Success Payment"}, status=status.HTTP_200_OK)
 
 
+class PaymentPromptPay(APIView):
+    def post(self,request):
+        amount = request.data.get('amount')
+    
+        
+        if not amount:
+            return Response({"error": "amount not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        payment_service = Facade.promptpayService()
+        pay = payment_service.qrcode(amount)
+        
+        return Response({"qrcode":settings.BASE_URL + settings.MEDIA_URL+'qrcode/'+pay}, status=status.HTTP_200_OK)
+
 class AdminPayment(APIView):
     def get(self,request):
         payment_service = Facade.omiseService()

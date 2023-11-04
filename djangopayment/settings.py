@@ -143,6 +143,7 @@ USE_TZ = os.getenv('USE_TZ')
 OMISE_SECRETE= os.getenv('OMISE_SECRETE')
 OMISE_PUBLIC= os.getenv('OMISE_PUBLIC')
 OMISE_RETURN_URI = os.getenv('OMISE_RETURN_URI')
+PROMPTPAY_PHONE = os.getenv('PROMPTPAY_PHONE')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

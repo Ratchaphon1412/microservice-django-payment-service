@@ -10,6 +10,7 @@ urlpatterns = [
    path('admin/payment/',  AdminPayment.as_view(), name='payment_admin'),
    path('admin/payment/receipt/',  AdminPaymentReceipt.as_view(), name='payment_admin_receipt'),
    path('payment/onetime/',PaymentAnonymous.as_view(),name='payment_anonymous'),
+   path('payment/promtpay/',PaymentPromptPay.as_view(),name='payment_promptpay'),
     
     
 ]
