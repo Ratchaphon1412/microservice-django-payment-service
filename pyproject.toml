@@ -20,6 +20,7 @@ kafka-python = "^2.0.2"
 omise = "^0.12.0"
 requests = "^2.31.0"
 gunicorn = "^21.2.0"
+promptpay = "^1.1.9"
 
 
 [build-system]
