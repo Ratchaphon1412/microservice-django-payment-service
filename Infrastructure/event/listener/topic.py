@@ -1,6 +1,10 @@
 from ..interface.topicInterface import TopicInterface
 from Infrastructure.domain.repository.userRepository import userRepository
 from Infrastructure.service import Facade
+from Infrastructure.kafka.producer import sendData
+import json
+
+from payment.models import User
 
 class Listener:
     def run(topic,message):
@@ -15,38 +19,46 @@ class Listener:
 
 class TopicUserCreate(TopicInterface):
     def action( message):
+        print(message)
         message_decode = message.decode('utf-8')
-        data = {
-            "user_id":message_decode
-            
-        }
-        header={
-            "Content-Type":"application/json"
-        }
+        
+        data = json.loads(message_decode)
+        print(data)
+        payment_service = Facade.omiseService()
+        customer = payment_service.createCustomer(data['email'],data['username'])
+        print('customer')
+        
+        
         
         try:
-            response = Facade.apiService().post('http://192.168.1.105:8024/api/v1/user/infrastructures/',data,header)
-            response_json = response.json()
-    
-            customer_omise_id = Facade.omiseService().createCustomer(response_json['user']['email'],response_json['user']['fullname'])
             
-            data = {
-                "id":response_json['user']['id'],
-                "email":response_json['user']['email'],
-                "description":response_json['user']['fullname'],
-                "phone":response_json['user']['phone'],
-                "customer_omise_id":customer_omise_id,
+            user = User.objects.create(id=data['id'],email=data['email'],username=data['username'],customer_omise_id=customer)
+            temp ={
+                "id":data['id'],
+                "customer_omise_id":user.customer_omise_id
             }
+            print('send data')
             
-            
-            
-            userRepository.create(data)
-            
-
-            
+            sendData("payment_customer",json.dumps(temp))
         except Exception as e:
             print(e)
-
+            
+            
+    
+    
+        
+        
+     
+        
+        
+        
+        
+        
+        
+        
+      
+        
+        
 class TopicUserUpdate(TopicInterface):
     def action( message):
         print("User Update")
