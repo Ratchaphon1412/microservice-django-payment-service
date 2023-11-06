@@ -32,7 +32,27 @@ SECRET_KEY = os.getenv('SECRET_KEY') # get secret key from .env file
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['microservice.payment.ratchaphon1412.co','localhost' ,'167.172.86.215']
+# ALLOWED_HOSTS = ['*']
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
+
+# CORS_ALLOWED_ORIGIN_ALLOW_ALL = True 
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
 
 
 # Application definition
@@ -47,7 +67,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'quotation',
     'payment',
-    'Infrastructure'
+    'Infrastructure',
+    "corsheaders"
     
 ]
 
@@ -65,6 +86,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
