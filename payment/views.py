@@ -249,11 +249,16 @@ class  PaymentInvoice(APIView):
         if not customer_id:
             return Response({"error": "customer_token not found"}, status=status.HTTP_400_BAD_REQUEST)
         
-        payment = Statement.objects.get(user_id=customer_id)
+        payment = Statement.objects.filter(user_id=customer_id)
+        list_payment = []
+        print(payment)
+        for item in payment:
+            payment_json = {"id": item.id, "user_id": item.user_id, "amount": item.amount, "pdf": item.pdf,"status": item.status,"code": item.code}
+            list_payment.append(payment_json)
+            
+            
         
-        payment_json = {"id": payment.id, "user_id": payment.user_id, "amount": payment.amount, "pdf": payment.pdf,"status": payment.status,"code": payment.code}
-        
-        return Response({"payment":payment_json }, status=status.HTTP_200_OK)
+        return Response({"payment":list_payment }, status=status.HTTP_200_OK)
         
     
 
