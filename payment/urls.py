@@ -11,6 +11,8 @@ urlpatterns = [
    path('admin/payment/receipt/',  AdminPaymentReceipt.as_view(), name='payment_admin_receipt'),
    path('payment/onetime/',PaymentAnonymous.as_view(),name='payment_anonymous'),
    path('payment/promtpay/',PaymentPromptPay.as_view(),name='payment_promptpay'),
+   path('payment/invoice/',PaymentInvoice.as_view(),name='payment_invoice'),
+   path('payment/invoice/manage/',PaymentInvoiceManage.as_view(),name="payment_invoice_manage"),
     
     
 ]

@@ -5,8 +5,13 @@ from Infrastructure.service import Facade
 from rest_framework import status
 from payment.serializers import *
 from django.conf import settings
+from payment.models import *
+
 import requests
 import json
+
+from payment.models import *
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -216,7 +221,116 @@ class AdminPaymentReceipt(APIView):
         return Response({"receipts": receipt}, status=status.HTTP_200_OK)
     
         
+class  PaymentInvoice(APIView):
+    def post(self,request):
+        customer_id = request.data.get('user_id')
+        amount = request.data.get('amount')
+        pdf = request.data.get('pdf')
+    
         
+        if not customer_id:
+            return Response({"error": "customer_token not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not amount:
+            return Response({"error": "amount not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not pdf :
+            return Response({"error": "pdf not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        payment = Statement.objects.create(user_id=customer_id,amount=amount,pdf=pdf)
+        
+        return Response({"message": "Success Payment"}, status=status.HTTP_200_OK)
+    
+    
+    def put(self,request):
+        customer_id = request.data.get('user_id')
+        
+        if not customer_id:
+            return Response({"error": "customer_token not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        payment = Statement.objects.get(user_id=customer_id)
+        
+        payment_json = {"id": payment.id, "user_id": payment.user_id, "amount": payment.amount, "pdf": payment.pdf,"status": payment.status,"code": payment.code}
+        
+        return Response({"payment":payment_json }, status=status.HTTP_200_OK)
+        
+    
+
+    def get(self,request):
+        payments = Statement.objects.all()
+        payment_list = []
+        
+        
+        for payment in payments:
+            print(payment)
+          
+            
+            payment_json = {"id": payment.id, "amount": payment.amount, "pdf": payment.pdf,"status": payment.status,"code": payment.code}
+            payment_list.append(payment_json)
+        return Response({"payments": payment_list}, status=status.HTTP_200_OK)
+        
+    
+    def delete(self,request):
+        payment_id = request.data.get('payment_id')
+        
+        if not payment_id:
+            return Response({"error": "payment_id not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        payment = Statement.objects.get(id=payment_id)
+        payment.delete()
+        
+        
+        return Response({"message": "Delete Payment Success"}, status=status.HTTP_200_OK)
+    
+
+class PaymentInvoiceManage(APIView):
+    
+    def put(self,request):
+        payment_id = request.data.get('payment_id')
+        statustemp = request.data.get('status')
+        
+        if not payment_id:
+            return Response({"error": "payment_id not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not status:
+            return Response({"error": "status not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        payment = Statement.objects.get(id=payment_id)
+        payment.status = statustemp
+        payment.save()
+        
+        
+        return Response({"message": "Update Payment Success"}, status=status.HTTP_200_OK)
+
+    def post(self,request):
+        payment_id = request.data.get('payment_id')
+        code = request.data.get('code')
+        
+        if not payment_id:
+            return Response({"error": "payment_id not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not code:
+            return Response({"error": "code not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        payment = Statement.objects.get(id=payment_id)
+        payment.code = code
+        payment.save()
+        
+        return Response({"message": "Update Payment Success"}, status=status.HTTP_200_OK)
+    
+    
+    
+    
+        
+        
+        
+        
+        
+        
+        
+        
+
         
     
 
