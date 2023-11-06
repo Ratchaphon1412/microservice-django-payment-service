@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dockerfile.prod
     working_dir: /app
-    command: poetry run python3 manage.py ConsumerCommand --topic create_user --group payment && poetry run gunicorn --bind 0.0.0.0:8023 djangopayment.wsgi
+    command: sh ./setup.sh
     ports:
       - "8023:8023"
     networks:
