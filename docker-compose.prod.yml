@@ -12,7 +12,7 @@ services:
       - payment-network
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
   db:
     image: postgres:13.1-alpine
     environment:
@@ -24,6 +24,11 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
     ports:
       - "5433:5433"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     networks:
       - payment-network
   nginx:

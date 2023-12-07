@@ -65,10 +65,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "corsheaders",
     'quotation',
     'payment',
     'Infrastructure',
-    "corsheaders"
+   
     
 ]
 
@@ -171,7 +172,7 @@ PROMPTPAY_PHONE = os.getenv('PROMPTPAY_PHONE')
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 MEDIA_URL = '/media/'
